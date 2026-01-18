@@ -1,6 +1,8 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 const LandingPage: React.FC = () => {
+  const { t } = useTranslation();
   return (
     <div className="min-h-screen bg-white" style={{fontFamily: 'Space Mono, monospace'}}>
       {/* Header */}
@@ -32,7 +34,7 @@ const LandingPage: React.FC = () => {
       {/* Footer */}
       <footer className="text-center py-8">
         <p className="text-gray-500 text-sm">
-          grably.space • <a href="/terms" className="hover:text-gray-900 transition-colors">Terms & Conditions</a>
+          grably.space • <a href="/terms" className="hover:text-gray-900 transition-colors">{t('landing.termsAndConditions')}</a>
         </p>
       </footer>
     </div>

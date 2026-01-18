@@ -3,6 +3,7 @@ import { invoke } from '@tauri-apps/api/core';
 import { listen } from '@tauri-apps/api/event';
 import { Loader2, Youtube, ArrowLeft, Check, Music, Video, CheckSquare, Square } from 'lucide-react';
 import { toast } from 'react-hot-toast';
+import { useTranslation } from 'react-i18next';
 
 interface VideoFormat {
   format_id: string;
@@ -114,6 +115,7 @@ const deselectAllVideos = (setSelectedVideos: (videos: Set<string>) => void) => 
 };
 
 export const YouTubeDownloader: React.FC<{ onBack: () => void }> = ({ onBack }) => {
+  const { t } = useTranslation();
   const [url, setUrl] = useState('');
   const [loading, setLoading] = useState(false);
   const [downloading, setDownloading] = useState(false);
@@ -474,10 +476,10 @@ export const YouTubeDownloader: React.FC<{ onBack: () => void }> = ({ onBack }) 
               <Youtube className="w-10 h-10 text-white" />
             </div>
             <h1 className="text-5xl font-bold text-gray-900 mb-2" style={{ fontFamily: 'Bungee, cursive' }}>
-              YOUTUBE DOWNLOADER
+              {t('youtube.title')}
             </h1>
             <p className="text-lg text-gray-600" style={{ fontFamily: 'Space Mono, monospace' }}>
-              Download videos and audio locally • No server needed
+              {t('youtube.description')}
             </p>
           </div>
 
@@ -490,7 +492,7 @@ export const YouTubeDownloader: React.FC<{ onBack: () => void }> = ({ onBack }) 
                   type="text"
                   value={url}
                   onChange={(e) => setUrl(e.target.value)}
-                  placeholder="Paste YouTube video URL..."
+                  placeholder={t('youtube.pasteUrl')}
                   className="w-full pl-12 pr-4 py-4 bg-gray-50 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:bg-white text-base rounded-xl"
                   style={{ fontFamily: 'Space Mono, monospace' }}
                   disabled={loading}
@@ -509,7 +511,7 @@ export const YouTubeDownloader: React.FC<{ onBack: () => void }> = ({ onBack }) 
                 {loading ? (
                   <Loader2 className="w-5 h-5 animate-spin" />
                 ) : (
-                  'GRAB IT'
+                  t('youtube.grabIt')
                 )}
               </button>
             </div>
@@ -521,7 +523,7 @@ export const YouTubeDownloader: React.FC<{ onBack: () => void }> = ({ onBack }) 
               <div className="flex items-center space-x-3">
                 <Loader2 className="w-6 h-6 text-orange-500 animate-spin" />
                 <p className="text-lg font-bold text-gray-800" style={{ fontFamily: 'Bungee, cursive' }}>
-                  Getting Video Information...
+                  {t('youtube.gettingInfo')}
                 </p>
               </div>
             </div>
@@ -555,7 +557,7 @@ export const YouTubeDownloader: React.FC<{ onBack: () => void }> = ({ onBack }) 
                         </div>
                       </div>
                       <div className="absolute top-4 right-4 bg-black bg-opacity-75 text-white px-3 py-1 rounded-lg text-sm">
-                        Click to watch on YouTube
+                        {t('youtube.clickToWatch')}
                       </div>
                     </div>
                   </div>
@@ -571,7 +573,7 @@ export const YouTubeDownloader: React.FC<{ onBack: () => void }> = ({ onBack }) 
                       <div className="flex items-center gap-2">
                         <div className="w-1.5 h-1.5 bg-orange-500 rounded-full animate-pulse"></div>
                         <p className="text-sm text-gray-600" style={{ fontFamily: 'Space Mono, monospace' }}>
-                          Duration: {formatDuration(videoInfo.duration)}
+                          {t('youtube.duration')}: {formatDuration(videoInfo.duration)}
                         </p>
                       </div>
                     )}
@@ -585,7 +587,7 @@ export const YouTubeDownloader: React.FC<{ onBack: () => void }> = ({ onBack }) 
                 <div className="bg-gradient-to-br from-orange-50 via-amber-50 to-yellow-50 rounded-xl shadow-md p-5 border border-orange-200">
                   <div className="mb-4">
                     <h3 className="text-lg font-bold text-gray-900 mb-1" style={{ fontFamily: 'Bebas Neue, cursive' }}>
-                      PLAYLIST: {playlistInfo.title}
+                      {t('youtube.playlist')}: {playlistInfo.title}
                     </h3>
                     <p className="text-sm text-gray-600">
                       {playlistInfo.video_count} videos • By {playlistInfo.uploader || 'Unknown'}
@@ -595,13 +597,13 @@ export const YouTubeDownloader: React.FC<{ onBack: () => void }> = ({ onBack }) 
                         onClick={() => selectAllVideos(playlistInfo, setSelectedVideos)}
                         className="px-3 py-1 text-xs font-bold bg-orange-100 text-orange-700 rounded hover:bg-orange-200"
                       >
-                        Select All
+                        {t('youtube.selectAll')}
                       </button>
                       <button
                         onClick={() => deselectAllVideos(setSelectedVideos)}
                         className="px-3 py-1 text-xs font-bold bg-gray-100 text-gray-700 rounded hover:bg-gray-200"
                       >
-                        Clear
+                        {t('youtube.clear')}
                       </button>
                     </div>
                   </div>
@@ -660,7 +662,7 @@ export const YouTubeDownloader: React.FC<{ onBack: () => void }> = ({ onBack }) 
                     <div className="space-y-3 border-t pt-4">
                       <div className="space-y-2">
                         <label className="text-xs font-bold text-orange-700 uppercase tracking-wider">
-                          Choose Format
+                          {t('youtube.chooseFormat')}
                         </label>
                         <div className="relative">
                           <select
@@ -675,15 +677,15 @@ export const YouTubeDownloader: React.FC<{ onBack: () => void }> = ({ onBack }) 
                               paddingRight: '2.5rem'
                             }}
                           >
-                            <option value="" disabled>Select Format</option>
-                            <optgroup label="Video">
+                            <option value="" disabled>{t('common.selectFormat')}</option>
+                            <optgroup label={t('youtube.video')}>
                               {videoFormats.slice(0, 5).map(f => (
                                 <option key={f.format_id} value={f.format_id}>
                                   {f.cleanResolution} • MP4 • {formatFileSize(f.filesize)}
                                 </option>
                               ))}
                             </optgroup>
-                            <optgroup label="Audio">
+                            <optgroup label={t('youtube.audio')}>
                               <option value="mp3">
                                 MP3 Audio • {formatFileSize(3100000)}
                               </option>
@@ -705,7 +707,7 @@ export const YouTubeDownloader: React.FC<{ onBack: () => void }> = ({ onBack }) 
                               : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                           }`}
                         >
-                          Download Current
+                          {t('youtube.downloadCurrent')}
                         </button>
                         <button
                           onClick={() => setDownloadMode('playlist')}
@@ -715,7 +717,7 @@ export const YouTubeDownloader: React.FC<{ onBack: () => void }> = ({ onBack }) 
                               : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                           }`}
                         >
-                          Download Selected ({selectedVideos.size})
+                          {t('youtube.downloadSelected')} ({selectedVideos.size})
                         </button>
                       </div>
 
@@ -733,10 +735,10 @@ export const YouTubeDownloader: React.FC<{ onBack: () => void }> = ({ onBack }) 
                         {downloading ? (
                           <span className="flex items-center justify-center gap-2">
                             <Loader2 className="w-4 h-4 animate-spin" />
-                            DOWNLOADING...
+                            {t('youtube.downloading')}
                           </span>
                         ) : (
-                          'DOWNLOAD NOW'
+                          t('youtube.downloadNow')
                         )}
                       </button>
                     </div>
@@ -759,7 +761,7 @@ export const YouTubeDownloader: React.FC<{ onBack: () => void }> = ({ onBack }) 
                       style={{ fontFamily: 'Bebas Neue, sans-serif', letterSpacing: '1px' }}
                     >
                       <Video className="w-5 h-5 inline mr-2" />
-                      VIDEO
+                      {t('youtube.video')}
                     </button>
                     <button
                       onClick={() => setFormatType('audio')}
@@ -771,7 +773,7 @@ export const YouTubeDownloader: React.FC<{ onBack: () => void }> = ({ onBack }) 
                       style={{ fontFamily: 'Bebas Neue, sans-serif', letterSpacing: '1px' }}
                     >
                       <Music className="w-5 h-5 inline mr-2" />
-                      AUDIO
+                      {t('youtube.audio')}
                     </button>
                   </div>
 
@@ -880,10 +882,10 @@ export const YouTubeDownloader: React.FC<{ onBack: () => void }> = ({ onBack }) 
                     {downloading ? (
                       <span className="flex items-center justify-center gap-2">
                         <Loader2 className="w-5 h-5 animate-spin" />
-                        DOWNLOADING...
+                        {t('youtube.downloading')}
                       </span>
                     ) : (
-                      'DOWNLOAD NOW'
+                      t('youtube.downloadNow')
                     )}
                   </button>
                 </div>

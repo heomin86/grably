@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { listen } from '@tauri-apps/api/event';
 import { Download } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 interface DownloadProgress {
   percent: number;
@@ -28,6 +29,7 @@ interface ActiveDownload {
 }
 
 export const ActiveDownloads: React.FC = () => {
+  const { t } = useTranslation();
   const [downloads, setDownloads] = useState<Map<string, ActiveDownload>>(new Map());
   const [isMinimized, setIsMinimized] = useState(false);
   const [position, setPosition] = useState({ x: 24, y: window.innerHeight - 250 });
@@ -166,7 +168,7 @@ export const ActiveDownloads: React.FC = () => {
           <div className="flex items-center gap-2">
             <Download className="w-4 h-4 text-orange-600" />
             <span className="text-sm font-bold text-gray-900" style={{ fontFamily: 'Space Mono, monospace' }}>
-              ACTIVE DOWNLOADS ({downloads.size})
+              {t('downloads.activeDownloads')} ({downloads.size})
             </span>
           </div>
           <button
@@ -183,10 +185,10 @@ export const ActiveDownloads: React.FC = () => {
             {downloads.size === 0 ? (
               <div className="p-6 text-center">
                 <p className="text-sm text-gray-500" style={{ fontFamily: 'Space Mono, monospace' }}>
-                  No active downloads
+                  {t('downloads.noActiveDownloads')}
                 </p>
                 <p className="text-xs text-gray-400 mt-2" style={{ fontFamily: 'Space Mono, monospace' }}>
-                  Downloads will appear here
+                  {t('downloads.downloadsWillAppear')}
                 </p>
               </div>
             ) : (

@@ -1,6 +1,7 @@
 import React from 'react';
 import { X, ExternalLink, Calendar, Bug, Star, Zap } from 'lucide-react';
 import { open } from '@tauri-apps/plugin-shell';
+import { useTranslation } from 'react-i18next';
 
 interface ChangelogProps {
   onClose: () => void;
@@ -88,6 +89,7 @@ const getVersionTypeColor = (type: string) => {
 };
 
 export const Changelog: React.FC<ChangelogProps> = ({ onClose }) => {
+  const { t } = useTranslation();
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
       <div className="bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden">
@@ -96,10 +98,10 @@ export const Changelog: React.FC<ChangelogProps> = ({ onClose }) => {
           <div className="flex items-center justify-between">
             <div>
               <h2 className="text-2xl font-bold text-gray-900" style={{fontFamily: 'Space Mono, monospace'}}>
-                What's New
+                {t('changelog.title')}
               </h2>
               <p className="text-gray-600 mt-1" style={{fontFamily: 'Courier Prime, monospace'}}>
-                Latest updates and improvements
+                {t('changelog.description')}
               </p>
             </div>
             <button
@@ -141,7 +143,7 @@ export const Changelog: React.FC<ChangelogProps> = ({ onClose }) => {
                       className="flex items-center space-x-1 text-orange-600 hover:text-orange-700 transition-colors"
                     >
                       <ExternalLink className="h-4 w-4" />
-                      <span>View on GitHub</span>
+                      <span>{t('changelog.viewOnGitHub')}</span>
                     </button>
                   </div>
                 </div>
@@ -176,7 +178,7 @@ export const Changelog: React.FC<ChangelogProps> = ({ onClose }) => {
               style={{fontFamily: 'Space Mono, monospace'}}
             >
               <ExternalLink className="h-4 w-4" />
-              <span>View All Releases</span>
+              <span>{t('changelog.viewAllReleases')}</span>
             </button>
           </div>
         </div>

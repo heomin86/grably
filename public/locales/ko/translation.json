@@ -1,1 +1,83 @@
-{}
+{
+  "youtube": {
+    "title": "유튜브 다운로더",
+    "description": "동영상과 오디오를 로컬에 다운로드 • 서버 불필요",
+    "pasteUrl": "유튜브 동영상 URL을 붙여넣으세요...",
+    "grabIt": "가져오기",
+    "gettingInfo": "동영상 정보 가져오는 중...",
+    "clickToWatch": "유튜브에서 보려면 클릭하세요",
+    "duration": "재생시간",
+    "playlist": "재생목록",
+    "selectAll": "모두 선택",
+    "clear": "지우기",
+    "chooseFormat": "형식 선택",
+    "downloadCurrent": "현재 다운로드",
+    "downloadSelected": "선택 다운로드",
+    "video": "동영상",
+    "audio": "오디오",
+    "downloading": "다운로드 중...",
+    "downloadNow": "지금 다운로드"
+  },
+  "universal": {
+    "title": "범용 다운로더",
+    "description": "모든 소셜 플랫폼에서 콘텐츠 가져오기 • 어디서나 작동",
+    "pasteUrl": "URL을 여기에 붙여넣으세요",
+    "placeholder": "https://instagram.com/p/...",
+    "detected": "감지됨",
+    "supportedPlatforms": "지원 플랫폼",
+    "grabItNow": "지금 가져오기!"
+  },
+  "transcription": {
+    "title": "무엇이든 변환",
+    "description": "유튜브, 틱톡 및 동영상 파일에서 텍스트 추출",
+    "newTranscription": "새 변환",
+    "queue": "대기열",
+    "result": "결과",
+    "videoUrl": "동영상 URL",
+    "selectVideos": "동영상 선택",
+    "transcriptionMethod": "변환 방법",
+    "addToQueue": "대기열에 추가",
+    "noTranscriptions": "아직 변환 없음",
+    "selectToView": "변환을 선택하여 보기",
+    "waitingInQueue": "대기열에서 대기 중...",
+    "processing": "처리 중",
+    "completed": "완료",
+    "error": "오류",
+    "transcriptionComplete": "변환 완료",
+    "copyToClipboard": "클립보드에 복사",
+    "downloadAsText": "텍스트로 다운로드",
+    "copiedToClipboard": "클립보드에 복사됨!",
+    "downloadedTranscription": "변환 다운로드됨!"
+  },
+  "downloads": {
+    "activeDownloads": "활성 다운로드",
+    "noActiveDownloads": "활성 다운로드 없음",
+    "downloadsWillAppear": "다운로드가 여기에 표시됩니다",
+    "downloadComplete": "다운로드 완료",
+    "downloadFailed": "다운로드 실패",
+    "failedToStart": "다운로드 시작 실패"
+  },
+  "changelog": {
+    "title": "새로운 소식",
+    "description": "최신 업데이트 및 개선 사항",
+    "viewOnGitHub": "GitHub에서 보기",
+    "viewAllReleases": "모든 릴리스 보기"
+  },
+  "landing": {
+    "termsAndConditions": "이용약관",
+    "madeWithLove": "❤️로 만들어짐"
+  },
+  "common": {
+    "free": "무료",
+    "fast": "빠름",
+    "private": "비공개",
+    "selectFormat": "형식 선택",
+    "grabAnyMedia": "모든 미디어를 로컬에서 가져오세요.",
+    "noServer": "서버 없음",
+    "server": "서버"
+  },
+  "errors": {
+    "fileSelectionRequiresApp": "파일 선택에는 데스크톱 앱이 필요합니다",
+    "failedToSelectFiles": "파일 선택 실패"
+  }
+}

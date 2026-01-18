@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { invoke } from '@tauri-apps/api/core';
 import { Download, Loader2, Globe2, ArrowLeft } from 'lucide-react';
 import toast from 'react-hot-toast';
+import { useTranslation } from 'react-i18next';
 
 // Platform Icons as SVG Components
 const InstagramIcon = () => (
@@ -50,6 +51,7 @@ const platforms = [
 ];
 
 export const UniversalDownloader: React.FC<{ onBack: () => void }> = ({ onBack }) => {
+  const { t } = useTranslation();
   const [url, setUrl] = useState('');
   const [downloading, setDownloading] = useState(false);
   // Removed progress state - using ActiveDownloads widget instead
@@ -134,17 +136,17 @@ export const UniversalDownloader: React.FC<{ onBack: () => void }> = ({ onBack }
             <Globe2 className="h-12 w-12 text-orange-500" />
           </div>
           <h1 className="text-5xl mb-4" style={{ fontFamily: 'Bungee, cursive', color: '#1F2937', letterSpacing: '2px' }}>
-            Universal Downloader
+            {t('universal.title')}
           </h1>
           <p className="text-gray-600" style={{ fontFamily: 'Space Mono, monospace' }}>
-            Grab content from any social platform • Works everywhere
+            {t('universal.description')}
           </p>
         </div>
 
         {/* Supported Platforms */}
         <div className="bg-white rounded-2xl shadow-xl p-8 mb-8">
           <h3 className="text-sm font-bold mb-4" style={{ fontFamily: 'Bebas Neue, sans-serif', color: '#ea580c' }}>
-            SUPPORTED PLATFORMS
+            {t('universal.supportedPlatforms')}
           </h3>
           <div className="grid grid-cols-3 md:grid-cols-6 gap-4 mb-8">
             {platforms.map((platform) => {
@@ -173,14 +175,14 @@ export const UniversalDownloader: React.FC<{ onBack: () => void }> = ({ onBack }
           <div className="space-y-6">
             <div>
               <label className="block text-sm font-bold mb-2" style={{ fontFamily: 'Bebas Neue, sans-serif', color: '#6B7280' }}>
-                PASTE URL HERE
+                {t('universal.pasteUrl')}
               </label>
               <div className="relative">
                 <input
                   type="text"
                   value={url}
                   onChange={(e) => setUrl(e.target.value)}
-                  placeholder="https://instagram.com/p/..."
+                  placeholder={t('universal.placeholder')}
                   className="w-full px-4 py-3 pr-12 rounded-xl border-2 border-orange-200 focus:border-orange-400 focus:outline-none transition-colors"
                   style={{ fontFamily: 'Space Mono, monospace' }}
                 />
@@ -192,7 +194,7 @@ export const UniversalDownloader: React.FC<{ onBack: () => void }> = ({ onBack }
               </div>
               {platformInfo && (
                 <p className="text-sm mt-2" style={{ fontFamily: 'Space Mono, monospace', color: platformInfo.color }}>
-                  Detected: {platformInfo.name}
+                  {t('universal.detected')}: {platformInfo.name}
                 </p>
               )}
             </div>
@@ -216,12 +218,12 @@ export const UniversalDownloader: React.FC<{ onBack: () => void }> = ({ onBack }
               {downloading ? (
                 <>
                   <Loader2 className="h-6 w-6 animate-spin" />
-                  Downloading...
+                  {t('youtube.downloading')}
                 </>
               ) : (
                 <>
                   <Download className="h-6 w-6 group-hover:animate-bounce" />
-                  GRAB IT!
+                  {t('universal.grabItNow')}
                 </>
               )}
             </button>

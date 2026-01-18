@@ -10,6 +10,7 @@ import { ActiveDownloads } from './components/ActiveDownloads';
 import { Changelog } from './components/Changelog';
 import { listen } from '@tauri-apps/api/event';
 import { open } from '@tauri-apps/plugin-shell';
+import { useTranslation } from 'react-i18next';
 
 const tools = [
   {
@@ -36,6 +37,7 @@ const tools = [
 ];
 
 function App() {
+  const { t } = useTranslation();
   const [activeView, setActiveView] = useState<string>('home');
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
   const [subtitleVisible, setSubtitleVisible] = useState(false);
@@ -79,7 +81,7 @@ function App() {
         
         toast(
           <div style={{ fontFamily: 'Space Mono, monospace' }}>
-            <strong style={{ fontSize: '14px', color: '#ea580c' }}>DOWNLOAD COMPLETE</strong>
+            <strong style={{ fontSize: '14px', color: '#ea580c' }}>{t('downloads.downloadComplete')}</strong>
             <br />
             <span style={{ fontSize: '12px', color: '#1f2937' }}>{filename}</span>
             <br />
@@ -158,14 +160,14 @@ function App() {
               <button
                 onClick={() => setShowChangelog(true)}
                 className="p-3 bg-white rounded-full shadow-md hover:shadow-lg transition-all duration-200 group"
-                title="What's New"
+                title={t('changelog.title')}
               >
                 <Newspaper className="h-6 w-6 text-gray-600 group-hover:text-orange-500 transition-colors" />
               </button>
               <button
                 onClick={() => open('https://github.com/ceorkm/grably')}
                 className="p-3 bg-white rounded-full shadow-md hover:shadow-lg transition-all duration-200 group"
-                title="View on GitHub"
+                title={t('changelog.viewOnGitHub')}
               >
                 <Github className="h-6 w-6 text-gray-600 group-hover:text-gray-900 transition-colors" />
               </button>
@@ -195,10 +197,10 @@ function App() {
                   letterSpacing: '-0.5px'
                 }}
               >
-                Grab any media locally. 
-                <span className="inline-block animate-pulse mx-2" style={{color: '#FF6B35'}}>Fast</span>
-                <span className="inline-block animate-bounce" style={{animationDelay: '0.1s'}}>Private</span>
-                <span className="inline-block animate-pulse ml-2" style={{animationDelay: '0.2s', fontFamily: 'Rubik Mono One', color: '#FF6B35'}}>FREE</span>
+                {t('common.grabAnyMedia')} 
+                <span className="inline-block animate-pulse mx-2" style={{color: '#FF6B35'}}>{t('common.fast')}</span>
+                <span className="inline-block animate-bounce" style={{animationDelay: '0.1s'}}>{t('common.private')}</span>
+                <span className="inline-block animate-pulse ml-2" style={{animationDelay: '0.2s', fontFamily: 'Rubik Mono One', color: '#FF6B35'}}>{t('common.free')}</span>
               </p>
             </div>
 
@@ -275,16 +277,16 @@ function App() {
                   >
                     {freePercentage}%
                   </div>
-                  <div style={{fontFamily: 'Bebas Neue, sans-serif', fontSize: '20px', color: '#6B7280'}}>FREE</div>
+                  <div style={{fontFamily: 'Bebas Neue, sans-serif', fontSize: '20px', color: '#6B7280'}}>{t('common.free')}</div>
                 </div>
                 <div className="group cursor-pointer">
                   <div 
                     className="text-3xl font-bold text-gray-900 mb-1 transition-all duration-300 group-hover:rotate-6"
                     style={{fontFamily: 'Bungee, cursive'}}
                   >
-                    NO
+                    {t('common.noServer')}
                   </div>
-                  <div style={{fontFamily: 'Archivo Black, sans-serif', color: '#6B7280'}}>Server</div>
+                  <div style={{fontFamily: 'Archivo Black, sans-serif', color: '#6B7280'}}>{t('common.server')}</div>
                 </div>
                 <div className="group cursor-pointer">
                   <div 
@@ -293,7 +295,7 @@ function App() {
                   >
                     100%
                   </div>
-                  <div style={{fontFamily: 'Playfair Display, serif', fontStyle: 'italic', color: '#6B7280'}}>Private</div>
+                  <div style={{fontFamily: 'Playfair Display, serif', fontStyle: 'italic', color: '#6B7280'}}>{t('common.private')}</div>
                 </div>
               </div>
             </div>
@@ -301,7 +303,7 @@ function App() {
             {/* Footer text */}
             <div className="text-center mt-20">
               <p style={{fontFamily: 'Courier Prime, monospace', fontSize: '12px', color: '#9ca3af'}}>
-                Made with ❤️
+                {t('landing.madeWithLove')}
               </p>
             </div>
           </div>

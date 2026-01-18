@@ -3,6 +3,7 @@ import { invoke } from '@tauri-apps/api/core';
 import { open } from '@tauri-apps/plugin-dialog';
 import { FileVideo, Youtube, Mic, Loader2, Check, Copy, Download, Sparkles, Globe, X, Clock, CheckCircle, AlertCircle, Upload, Headphones, Brain, Activity, FileText, Link, Cloud, Settings, FileAudio, ArrowLeft } from 'lucide-react';
 import toast from 'react-hot-toast';
+import { useTranslation } from 'react-i18next';
 
 // Check if we're in Tauri context
 const isTauri = () => {
@@ -55,6 +56,7 @@ interface TranscriptionJob {
 }
 
 export const TranscriptionTool: React.FC<{ onBack: () => void }> = ({ onBack }) => {
+  const { t } = useTranslation();
   const [selectedPlatform, setSelectedPlatform] = useState('youtube');
   const [url, setUrl] = useState('');
   const [files, setFiles] = useState<{path: string, name: string, size?: number}[]>([]);
@@ -254,7 +256,7 @@ export const TranscriptionTool: React.FC<{ onBack: () => void }> = ({ onBack }) 
   const selectFiles = async () => {
     try {
       if (!isTauri()) {
-        toast.error('File selection requires the desktop app');
+        toast.error(t('errors.fileSelectionRequiresApp'));
         return;
       }
       
@@ -277,13 +279,13 @@ export const TranscriptionTool: React.FC<{ onBack: () => void }> = ({ onBack }) 
       }
     } catch (error) {
       console.error('Failed to select files:', error);
-      toast.error('Failed to select files');
+      toast.error(t('errors.failedToSelectFiles'));
     }
   };
 
   const copyTranscription = (transcription: string) => {
     navigator.clipboard.writeText(transcription);
-    toast.success('Copied to clipboard!');
+    toast.success(t('transcription.copiedToClipboard'));
   };
 
 
@@ -299,7 +301,7 @@ export const TranscriptionTool: React.FC<{ onBack: () => void }> = ({ onBack }) 
     a.click();
     window.URL.revokeObjectURL(url);
     document.body.removeChild(a);
-    toast.success('Downloaded transcription!');
+    toast.success(t('transcription.downloadedTranscription'));
   };
 
   const removeJob = (jobId: string) => {
@@ -348,10 +350,10 @@ export const TranscriptionTool: React.FC<{ onBack: () => void }> = ({ onBack }) 
             <FileAudio className="w-8 h-8 text-white" />
           </div>
           <h1 className="text-4xl font-black mb-3 text-gray-800" style={{ fontFamily: 'Bungee, cursive' }}>
-            TRANSCRIBE ANYTHING
+            {t('transcription.title')}
           </h1>
           <p className="text-lg font-bold text-gray-600" style={{ fontFamily: 'Bebas Neue, cursive', letterSpacing: '1px' }}>
-            Extract text from YouTube, TikTok & video files
+            {t('transcription.description')}
           </p>
           {(processingCount > 0 || queuedCount > 0) && (
             <div className="flex items-center justify-center gap-4 mt-4">
@@ -372,7 +374,7 @@ export const TranscriptionTool: React.FC<{ onBack: () => void }> = ({ onBack }) 
         <div className="grid lg:grid-cols-3 gap-6">
           {/* Input Section */}
           <div className="bg-gradient-to-br from-orange-50 to-amber-50 backdrop-blur-xl border-2 border-orange-300 rounded-3xl p-6">
-            <h3 className="text-lg font-black text-gray-800 mb-3" style={{ fontFamily: 'Archivo Black, sans-serif' }}>NEW TRANSCRIPTION</h3>
+            <h3 className="text-lg font-black text-gray-800 mb-3" style={{ fontFamily: 'Archivo Black, sans-serif' }}>{t('transcription.newTranscription')}</h3>
             
             {/* Platform Selection */}
             <div className="grid grid-cols-2 gap-2 mb-4">
@@ -416,7 +418,7 @@ export const TranscriptionTool: React.FC<{ onBack: () => void }> = ({ onBack }) 
             {selectedPlatform === 'video' ? (
               <div className="mb-4">
                 <label className="block text-xs font-black text-orange-800 uppercase tracking-wider mb-2" style={{ fontFamily: 'Bebas Neue, cursive' }}>
-                  Select Videos
+                  {t('transcription.selectVideos')}
                   {files.length > 0 && (
                     <span className="ml-2 text-red-600">({files.length} selected)</span>
                   )}
@@ -453,7 +455,7 @@ export const TranscriptionTool: React.FC<{ onBack: () => void }> = ({ onBack }) 
               </div>
             ) : (
               <div className="mb-4">
-                <label className="block text-xs font-black text-orange-800 uppercase tracking-wider mb-2" style={{ fontFamily: 'Bebas Neue, cursive' }}>Video URL</label>
+                <label className="block text-xs font-black text-orange-800 uppercase tracking-wider mb-2" style={{ fontFamily: 'Bebas Neue, cursive' }}>{t('transcription.videoUrl')}</label>
                 <input
                   type="text"
                   value={url}
@@ -471,7 +473,7 @@ export const TranscriptionTool: React.FC<{ onBack: () => void }> = ({ onBack }) 
 
             {/* Method Selection */}
             <div className="mb-4">
-              <label className="block text-xs font-black text-orange-800 uppercase tracking-wider mb-2" style={{ fontFamily: 'Bebas Neue, cursive' }}>Transcription Method</label>
+              <label className="block text-xs font-black text-orange-800 uppercase tracking-wider mb-2" style={{ fontFamily: 'Bebas Neue, cursive' }}>{t('transcription.transcriptionMethod')}</label>
               <div className="space-y-2">
                 {transcriptionMethods.map((m) => {
                   const isAvailable = m.available.includes(selectedPlatform);
@@ -544,13 +546,13 @@ export const TranscriptionTool: React.FC<{ onBack: () => void }> = ({ onBack }) 
 
           {/* Queue Section */}
           <div className="bg-gradient-to-br from-amber-50 to-orange-50 backdrop-blur-xl border-2 border-amber-300 rounded-3xl p-6">
-            <h3 className="text-lg font-black text-gray-800 mb-3" style={{ fontFamily: 'Archivo Black, sans-serif' }}>QUEUE</h3>
+            <h3 className="text-lg font-black text-gray-800 mb-3" style={{ fontFamily: 'Archivo Black, sans-serif' }}>{t('transcription.queue')}</h3>
             
             {jobs.length === 0 ? (
               <div className="h-[400px] flex items-center justify-center">
                 <div className="text-center">
                   <Clock className="w-12 h-12 text-gray-400 mx-auto mb-3" />
-                  <p className="text-gray-600 text-sm">No transcriptions yet</p>
+                  <p className="text-gray-600 text-sm">{t('transcription.noTranscriptions')}</p>
                 </div>
               </div>
             ) : (
@@ -585,25 +587,25 @@ export const TranscriptionTool: React.FC<{ onBack: () => void }> = ({ onBack }) 
                               ) : (
                                 <Loader2 className="w-3 h-3 animate-spin text-orange-500" />
                               )}
-                              <span className="text-xs text-orange-600">{job.statusMessage || 'Processing...'}</span>
+                              <span className="text-xs text-orange-600">{job.statusMessage || t('transcription.processing')}</span>
                             </>
                           )}
                           {job.status === 'queued' && (
                             <>
                               <Clock className="w-3 h-3 text-amber-500" />
-                              <span className="text-xs text-amber-600">{job.statusMessage || 'Queued'}</span>
+                              <span className="text-xs text-amber-600">{job.statusMessage || t('transcription.waitingInQueue')}</span>
                             </>
                           )}
                           {job.status === 'completed' && (
                             <>
                               <CheckCircle className="w-3 h-3 text-green-500" />
-                              <span className="text-xs text-green-600">Completed</span>
+                              <span className="text-xs text-green-600">{t('transcription.completed')}</span>
                             </>
                           )}
                           {job.status === 'error' && (
                             <>
                               <AlertCircle className="w-3 h-3 text-red-500" />
-                              <span className="text-xs text-red-600">Error</span>
+                              <span className="text-xs text-red-600">{t('transcription.error')}</span>
                             </>
                           )}
                         </div>
@@ -636,13 +638,13 @@ export const TranscriptionTool: React.FC<{ onBack: () => void }> = ({ onBack }) 
 
           {/* Output Section */}
           <div className="bg-gradient-to-br from-red-50 to-orange-50 backdrop-blur-xl border-2 border-red-300 rounded-3xl p-6">
-            <h3 className="text-lg font-black text-gray-800 mb-3" style={{ fontFamily: 'Archivo Black, sans-serif' }}>RESULT</h3>
+            <h3 className="text-lg font-black text-gray-800 mb-3" style={{ fontFamily: 'Archivo Black, sans-serif' }}>{t('transcription.result')}</h3>
             
             {!activeJob ? (
               <div className="h-96 flex items-center justify-center">
                 <div className="text-center">
                   <Mic className="w-12 h-12 text-gray-400 mx-auto mb-3" />
-                  <p className="text-gray-600 text-sm">Select a transcription to view</p>
+                  <p className="text-gray-600 text-sm">{t('transcription.selectToView')}</p>
                 </div>
               </div>
             ) : activeJob.status === 'processing' ? (
@@ -672,7 +674,7 @@ export const TranscriptionTool: React.FC<{ onBack: () => void }> = ({ onBack }) 
                     </h4>
                     {activeJob.videoInfo.duration && (
                       <p className="text-xs font-bold text-orange-700" style={{ fontFamily: 'Space Mono, monospace' }}>
-                        Duration: {activeJob.videoInfo.duration}
+                        {t('youtube.duration')}: {activeJob.videoInfo.duration}
                       </p>
                     )}
                   </div>
@@ -690,14 +692,14 @@ export const TranscriptionTool: React.FC<{ onBack: () => void }> = ({ onBack }) 
                     <button
                       onClick={() => copyTranscription(activeJob.transcription!)}
                       className="p-2 rounded-lg bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 transition-all duration-300 transform hover:scale-110 shadow-md"
-                      title="Copy to clipboard"
+                      title={t('transcription.copyToClipboard')}
                     >
                       <Copy className="w-4 h-4 text-white" />
                     </button>
                     <button
                       onClick={() => downloadTranscription(activeJob)}
                       className="p-2 rounded-lg bg-gradient-to-r from-red-500 to-orange-500 hover:from-red-600 hover:to-orange-600 transition-all duration-300 transform hover:scale-110 shadow-md"
-                      title="Download as text"
+                      title={t('transcription.downloadAsText')}
                     >
                       <Download className="w-4 h-4 text-white" />
                     </button>
@@ -707,7 +709,7 @@ export const TranscriptionTool: React.FC<{ onBack: () => void }> = ({ onBack }) 
                 <div className="flex items-center gap-2 p-3 bg-gradient-to-r from-green-100 to-emerald-100 border-2 border-green-400 rounded-xl">
                   <Check className="w-5 h-5 text-green-600" />
                   <span className="text-sm font-black text-green-700 uppercase tracking-wider" style={{ fontFamily: 'Bebas Neue, cursive' }}>
-                    Transcription Complete
+                    {t('transcription.transcriptionComplete')}
                   </span>
                 </div>
               </div>
@@ -715,7 +717,7 @@ export const TranscriptionTool: React.FC<{ onBack: () => void }> = ({ onBack }) 
               <div className="h-96 flex items-center justify-center">
                 <div className="text-center">
                   <Clock className="w-12 h-12 text-amber-500 mx-auto mb-3" />
-                  <p className="text-amber-600 text-sm">Waiting in queue...</p>
+                  <p className="text-amber-600 text-sm">{t('transcription.waitingInQueue')}</p>
                 </div>
               </div>
             )}

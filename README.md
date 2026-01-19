@@ -12,7 +12,7 @@
   
   **Free • Open Source • Privacy-First • No Ads • No Tracking**
   
-  [Download Latest Release](https://github.com/yourusername/grably/releases) • [Report Bug](https://github.com/yourusername/grably/issues) • [Request Feature](https://github.com/yourusername/grably/issues)
+  [Download Latest Release](https://github.com/heomin86/grably/releases) • [Report Bug](https://github.com/heomin86/grably/issues) • [Request Feature](https://github.com/heomin86/grably/issues)
 </div>
 
 ---
@@ -50,7 +50,7 @@
 
 ### Download Pre-built App
 
-1. Go to [Releases](https://github.com/yourusername/grably/releases)
+1. Go to [Releases](https://github.com/heomin86/grably/releases)
 2. Download for macOS:
    - **macOS**: `Grably-Universal.dmg` (Universal - Intel + Apple Silicon)
 3. Open the DMG and drag Grably to Applications
@@ -69,7 +69,7 @@
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/grably.git
+git clone https://github.com/heomin86/grably.git
 cd grably
 
 # Install dependencies

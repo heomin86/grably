@@ -1,10 +1,10 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
+import koTranslation from '../public/locales/ko/translation.json';
 
-// Korean translations
 const resources = {
   ko: {
-    translation: {}
+    translation: koTranslation
   }
 };
 
@@ -12,13 +12,13 @@ i18n
   .use(initReactI18next)
   .init({
     resources,
-    lng: 'ko', // Fixed to Korean
+    lng: 'ko',
     fallbackLng: 'ko',
     interpolation: {
-      escapeValue: false // React already escapes XSS
+      escapeValue: false
     },
     react: {
-      useSuspense: false // Important for Tauri initial load
+      useSuspense: false
     }
   });
 
